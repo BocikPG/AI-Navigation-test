@@ -19,27 +19,22 @@ public class Worker : MonoBehaviour
 	BuildingParent destinationBuilding;
 
 
-	private bool isTraveling;
+	private bool isCarrying => !carriedResource.isEmpty();
 
 	//unity methods
 	void Update()
 	{
-		if (!isTraveling)
+		if (sourceBuilding == null)
 		{
-			if (WorkerManger.Instance.extractionBuildings.Count > 0)
-			{
-				sourceBuilding = WorkerManger.Instance.extractionBuildings[0];
+			sourceBuilding = WorkerManger.Instance.GetClosestExtractor();
+			if (sourceBuilding != null)
 				agent.destination = sourceBuilding.transform.position;
-			}
-			if (WorkerManger.Instance.productionBuildings.Count > 0)
-			{
-				if (carriedResource.resources.Count > 0)
-				{
-					destinationBuilding = WorkerManger.Instance.productionBuildings[0];
-					agent.destination = destinationBuilding.transform.position;
-				}
-
-			}
+		}
+		if (destinationBuilding == null)
+		{
+			destinationBuilding = WorkerManger.Instance.GetClosestProduction();
+			if (isCarrying && destinationBuilding != null)
+				agent.destination = destinationBuilding.transform.position;
 		}
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -69,17 +64,44 @@ public class Worker : MonoBehaviour
 			return;
 		if (other.gameObject == sourceBuilding.gameObject)
 		{
-			if (!isTraveling)
+			if (!isCarrying)
 			{
-				PickUpPackage(sourceBuilding);
-				isTraveling = true;
+				if (!PickUpPackage(sourceBuilding))
+				{
+					sourceBuilding = WorkerManger.Instance.GetClosestExtractor();
+					destinationBuilding = WorkerManger.Instance.GetClosestProduction();
+					agent.destination = sourceBuilding.transform.position;
+				}
 			}
+			else
+			{
+				if (destinationBuilding != null)
+				{
+					agent.destination = destinationBuilding.transform.position;
+				}
+			}
+
+
 		}
 		if (destinationBuilding == null)
 			return;
 		if (other.gameObject == destinationBuilding.gameObject)
 		{
-			DropPackage(destinationBuilding);
+			if (isCarrying)
+			{
+				DropPackage(destinationBuilding);
+				sourceBuilding = destinationBuilding;
+				destinationBuilding = WorkerManger.Instance.GetNextDestination(sourceBuilding);
+				agent.destination = sourceBuilding.transform.position;
+			}
+			else
+			{
+				sourceBuilding = WorkerManger.Instance.GetClosestExtractor();
+				destinationBuilding = WorkerManger.Instance.GetClosestProduction();
+				agent.destination = sourceBuilding.transform.position;
+
+			}
+
 		}
 	}
 
@@ -88,25 +110,36 @@ public class Worker : MonoBehaviour
 	private void DropPackage(BuildingParent destination)
 	{
 		foreach (var res in carriedResource.resources)
+		{
 			destination.resourcesList.Add(res.resourceSO, res.amount);
+			carriedResource.TryUse(res.resourceSO, res.amount);
+		}
+
 	}
 
-	private void PickUpPackage(BuildingParent source)
+	private bool PickUpPackage(BuildingParent source)
 	{
 		var productionBuilding = source.GetComponent<ProductionBuilding>();
 		if (productionBuilding != null)
 		{
-			carriedResource.Add(productionBuilding.outputResourceSO, 1); //TODO: remove from source
-
-
-			return;
+			if (productionBuilding.resourcesList.TryUse(productionBuilding.outputResourceSO, 1))
+			{
+				carriedResource.Add(productionBuilding.outputResourceSO, 1);
+				return true;
+			}
 		}
 
 		var extractionBuilding = source.GetComponent<ExtractionBuilding>();
 		if (extractionBuilding != null)
 		{
-			carriedResource.Add(extractionBuilding.resourceSO, 1);
-			return;
+			if (extractionBuilding.resourcesList.TryUse(extractionBuilding.resourceSO, 1))
+			{
+				carriedResource.Add(extractionBuilding.resourceSO, 1);
+				return true;
+			}
 		}
+		return false;
 	}
+
+
 }

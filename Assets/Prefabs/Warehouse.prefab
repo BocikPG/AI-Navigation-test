@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickUpZone: {fileID: 6359379868163309016}
+  resourcesList: {fileID: 5555476102538582365}
   buildingCanvas: {fileID: 8012430477017447792}
 --- !u!65 &4180698505486058412
 BoxCollider:

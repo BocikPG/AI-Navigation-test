@@ -17,30 +17,80 @@ public class WorkerManger : MonoBehaviour
 	public List<Building> buildingsB = new();
 
 
-    //public methods
-    public void OnBuildingPlaced(BuildingParent building)
-    {
-        var productionBuilding = building.GetComponent<ProductionBuilding>();
-        if(productionBuilding!=null)
-        {
-            productionBuildings.Add(productionBuilding);
-            return;
-        }
+	//public methods
+	public void OnBuildingPlaced(BuildingParent building)
+	{
+		var productionBuilding = building.GetComponent<ProductionBuilding>();
+		if (productionBuilding != null)
+		{
+			productionBuildings.Add(productionBuilding);
+			return;
+		}
 
-        var extractionBuilding = building.GetComponent<ExtractionBuilding>();
-        if(extractionBuilding!=null)
-        {
-            extractionBuildings.Add(extractionBuilding);
-            return;
-        }
+		var extractionBuilding = building.GetComponent<ExtractionBuilding>();
+		if (extractionBuilding != null)
+		{
+			extractionBuildings.Add(extractionBuilding);
+			return;
+		}
 
-        var buildingB = building.GetComponent<Building>();
-        if(buildingB!=null)
-        {
-            buildingsB.Add(buildingB);
-            return;
-        }
-    }
+		var buildingB = building.GetComponent<Building>();
+		if (buildingB != null)
+		{
+			buildingsB.Add(buildingB);
+			return;
+		}
+	}
+
+	public BuildingParent GetNextDestination(BuildingParent sourceBuilding)
+	{
+		var productionBuilding = sourceBuilding.GetComponent<ProductionBuilding>();
+		if (productionBuilding != null)
+		{
+			var warehouse = GetClosestWarehouse();
+			if (warehouse == null)
+			{
+                return GetClosestProduction();
+			}
+			else
+			{
+				return warehouse;
+			}
+		}
+
+		var extractionBuilding = sourceBuilding.GetComponent<ExtractionBuilding>();
+		if (extractionBuilding != null)
+		{
+			return GetClosestProduction();
+		}
+
+		var buildingB = sourceBuilding.GetComponent<Building>();
+		if (buildingB != null)
+		{
+			return GetClosestExtractor();
+		}
+
+		return null;
+	}
+
+	public BuildingParent GetClosestExtractor()
+	{
+		if (extractionBuildings.Count <= 0)
+			return null;
+		return extractionBuildings[0];
+	}
+	public BuildingParent GetClosestProduction()
+	{
+		if (productionBuildings.Count <= 0)
+			return null;
+		return productionBuildings[0];
+	}
+	public BuildingParent GetClosestWarehouse()
+	{
+		if (buildingsB.Count <= 0)
+			return null;
+		return buildingsB[0];
+	}
 
 	//unity methods
 	private void Awake()
