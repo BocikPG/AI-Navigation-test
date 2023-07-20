@@ -50,7 +50,7 @@ public class WorkerManger : MonoBehaviour
 			var warehouse = GetClosestWarehouse();
 			if (warehouse == null)
 			{
-                return GetClosestProduction();
+				return GetClosestProduction();
 			}
 			else
 			{
@@ -77,19 +77,52 @@ public class WorkerManger : MonoBehaviour
 	{
 		if (extractionBuildings.Count <= 0)
 			return null;
-		return extractionBuildings[0];
+		BuildingParent closest = extractionBuildings[0];
+		float closestDist = Mathf.Infinity;
+		foreach (var extra in extractionBuildings)
+		{
+			var extraDist = Vector3.Distance(extra.transform.position, worker.transform.position);
+			if (closestDist > extraDist)
+			{
+				closest = extra;
+				closestDist = extraDist;
+			}
+		}
+		return closest;
 	}
 	public BuildingParent GetClosestProduction()
 	{
 		if (productionBuildings.Count <= 0)
 			return null;
-		return productionBuildings[0];
+		BuildingParent closest = productionBuildings[0];
+		float closestDist = Mathf.Infinity;
+		foreach (var extra in productionBuildings)
+		{
+			var extraDist = Vector3.Distance(extra.transform.position, worker.transform.position);
+			if (closestDist > extraDist)
+			{
+				closest = extra;
+				closestDist = extraDist;
+			}
+		}
+		return closest;
 	}
 	public BuildingParent GetClosestWarehouse()
 	{
 		if (buildingsB.Count <= 0)
 			return null;
-		return buildingsB[0];
+		BuildingParent closest = buildingsB[0];
+		float closestDist = Mathf.Infinity;
+		foreach (var extra in buildingsB)
+		{
+			var extraDist = Vector3.Distance(extra.transform.position, worker.transform.position);
+			if (closestDist > extraDist)
+			{
+				closest = extra;
+				closestDist = extraDist;
+			}
+		}
+		return closest;
 	}
 
 	//unity methods
