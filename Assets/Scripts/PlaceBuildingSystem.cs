@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PlaceBuildingSystem : MonoBehaviour
 {
 	//Events
-	UnityEvent OnBuildingPlaced = new();
+	UnityEvent<BuildingParent> OnBuildingPlaced = new();
 
 	//inspector
 	[SerializeField]
@@ -22,9 +22,11 @@ public class PlaceBuildingSystem : MonoBehaviour
 	[SerializeField]
 	Transform buildingsContainer;
 
-	void Start()
+	IEnumerator Start()
 	{
+        yield return new WaitForEndOfFrame();
 		OnBuildingPlaced.AddListener(WalkableGround.Instance.RebuildWalkableSurface);
+        OnBuildingPlaced.AddListener(WorkerManger.Instance.OnBuildingPlaced);
 	}
 
 	void OnEnable()
@@ -54,9 +56,9 @@ public class PlaceBuildingSystem : MonoBehaviour
 
 		if (Input.GetMouseButton(0) && placingVisual.transform.position != placingVisualLimboPosition)
 		{
-			Instantiate(gameplayPrefab, placingVisual.transform.position, placingVisual.transform.rotation, buildingsContainer);
+			var building = Instantiate(gameplayPrefab, placingVisual.transform.position, placingVisual.transform.rotation, buildingsContainer);
 			enabled = false;
-			OnBuildingPlaced.Invoke();
+			OnBuildingPlaced.Invoke(building.GetComponent<BuildingParent>());
 		}
 
 		if (Input.GetMouseButton(1))

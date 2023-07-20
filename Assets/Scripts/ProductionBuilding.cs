@@ -18,13 +18,14 @@ public class ProductionBuilding : BuildingParent
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         timeProgress = 0f;
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         timeProgress += Time.deltaTime;
 
         if (timeProgress > timeToExtract)

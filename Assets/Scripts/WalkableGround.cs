@@ -25,7 +25,7 @@ public class WalkableGround : MonoBehaviour
 	}
 
 	//public methods
-	public void RebuildWalkableSurface()
+	public void RebuildWalkableSurface(BuildingParent building)
 	{
 		surface.BuildNavMesh();
 	}

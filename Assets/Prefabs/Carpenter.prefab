@@ -41,7 +41,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6995514592916349562}
-  - component: {fileID: 9118877400263752970}
   - component: {fileID: 8951309828733733232}
   - component: {fileID: 7508324529172589886}
   - component: {fileID: 3038054523568247327}
@@ -71,20 +70,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9118877400263752970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6995514592916349561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c0482901bcdb474fa7503dedbd4cb6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PickUpZone: {fileID: 0}
-  buildingCanvas: {fileID: 4587874233119197532}
 --- !u!114 &8951309828733733232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickUpZone: {fileID: 5870612876787832459}
+  buildingCanvas: {fileID: 4587874233119197532}
   inputAmountRequired: 2
   inputResourceSO: {fileID: 11400000, guid: 795efae3f160520408a9f448e352f7e7, type: 2}
   outputResourceSO: {fileID: 11400000, guid: 0c3e8e98b5cb351459d436f738749146, type: 2}
