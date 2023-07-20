@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8491859787653399188}
   - component: {fileID: 8224882144181590208}
   - component: {fileID: 3685205610601233316}
+  - component: {fileID: 2151652664707773214}
   m_Layer: 0
   m_Name: Woodcutter
   m_TagString: Untagged
@@ -82,6 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0482901bcdb474fa7503dedbd4cb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickUpZone: {fileID: 0}
   buildingCanvas: {fileID: 8052306705087865600}
 --- !u!114 &4744103896725887065
 MonoBehaviour:
@@ -133,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c192f43fb56bb14eb437d2e58ec8b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickUpZone: {fileID: 2151652664707773214}
   timeToExtract: 5
   resourceSO: {fileID: 11400000, guid: 795efae3f160520408a9f448e352f7e7, type: 2}
   resourcesList: {fileID: 4744103896725887065}
@@ -154,6 +157,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.009473205, y: 0.501938, z: 0.007600427}
   m_TimeToStationary: 0.5
+--- !u!65 &2151652664707773214
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3522370186777126650}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.05, y: 1.29736, z: 3.02}
+  m_Center: {x: -0.009473205, y: 0.501938, z: 0.0076004267}
 --- !u!1001 &3522370187384606872
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5254456220223307656}
   - component: {fileID: 4180698505486058412}
   - component: {fileID: 2038790601946153458}
+  - component: {fileID: 6359379868163309016}
   m_Layer: 0
   m_Name: Warehouse
   m_TagString: Untagged
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0482901bcdb474fa7503dedbd4cb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickUpZone: {fileID: 6359379868163309016}
   buildingCanvas: {fileID: 8012430477017447792}
 --- !u!65 &4180698505486058412
 BoxCollider:
@@ -137,6 +139,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.04533124, y: 1.0102415, z: 0.20048654}
   m_TimeToStationary: 0.5
+--- !u!65 &6359379868163309016
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8304633198429979676}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.86, y: 2.217471, z: 3.72}
+  m_Center: {x: -0.04533124, y: 1.0102415, z: 0.20048654}
 --- !u!1001 &8304633197981728387
 PrefabInstance:
   m_ObjectHideFlags: 0

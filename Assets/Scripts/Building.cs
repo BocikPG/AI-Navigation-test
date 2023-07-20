@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+//why all building aren't inherited by one class???
+public class Building : BuildingParent
 {
     public Canvas buildingCanvas;
     void Update()
