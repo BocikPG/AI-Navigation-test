@@ -1,56 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlaceBuildingSystem : MonoBehaviour
 {
-    [SerializeField]
-    GameObject gameplayPrefab;
-    [SerializeField]
-    GameObject placingPrefab;
-    [SerializeField]
-    LayerMask groundMask;
+	//Events
+	UnityEvent OnBuildingPlaced = new();
 
-    GameObject placingVisual;
-    Vector3 placingVisualLimboPosition = Vector3.down * 15f;
+	//inspector
+	[SerializeField]
+	GameObject gameplayPrefab;
+	[SerializeField]
+	GameObject placingPrefab;
+	[SerializeField]
+	LayerMask groundMask;
 
-    [SerializeField]
-    Transform buildingsContainer;
+	GameObject placingVisual;
+	Vector3 placingVisualLimboPosition = Vector3.down * 15f;
 
-    void OnEnable()
-    {
-        placingVisual = Instantiate(placingPrefab, placingVisualLimboPosition, Quaternion.identity);
-    }
-    
-    void OnDisable()
-    {
-        Destroy(placingVisual);
-        placingVisual = null;
-    }
+	[SerializeField]
+	Transform buildingsContainer;
 
-    void Update()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-        if (Physics.Raycast(ray, out hit, 100f, groundMask))
-        {
-            placingVisual.transform.position = hit.point;
-        }
-        else
-        {
-            placingVisual.transform.position = placingVisualLimboPosition;
-        }
+	void Start()
+	{
+		OnBuildingPlaced.AddListener(WalkableGround.Instance.RebuildWalkableSurface);
+	}
 
-        if (Input.GetMouseButton(0) && placingVisual.transform.position != placingVisualLimboPosition)
-        {
-            Instantiate(gameplayPrefab, placingVisual.transform.position, placingVisual.transform.rotation, buildingsContainer);
-            enabled = false;
-        }
+	void OnEnable()
+	{
+		placingVisual = Instantiate(placingPrefab, placingVisualLimboPosition, Quaternion.identity);
+	}
 
-        if (Input.GetMouseButton(1))
-        {
-            enabled = false;
-        }
-    }
+	void OnDisable()
+	{
+		Destroy(placingVisual);
+		placingVisual = null;
+	}
+
+	void Update()
+	{
+		RaycastHit hit;
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+		if (Physics.Raycast(ray, out hit, 100f, groundMask))
+		{
+			placingVisual.transform.position = hit.point;
+		}
+		else
+		{
+			placingVisual.transform.position = placingVisualLimboPosition;
+		}
+
+		if (Input.GetMouseButton(0) && placingVisual.transform.position != placingVisualLimboPosition)
+		{
+			Instantiate(gameplayPrefab, placingVisual.transform.position, placingVisual.transform.rotation, buildingsContainer);
+			enabled = false;
+			OnBuildingPlaced.Invoke();
+		}
+
+		if (Input.GetMouseButton(1))
+		{
+			enabled = false;
+		}
+	}
 }
