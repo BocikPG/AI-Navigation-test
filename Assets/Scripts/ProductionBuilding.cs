@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProductionBuilding : BuildingParent
 {
+    public static string Tag = "ProductionBuilding";
     public int inputAmountRequired = 2;
     public GameResourceSO inputResourceSO;
     public GameResourceSO outputResourceSO;
@@ -11,7 +12,7 @@ public class ProductionBuilding : BuildingParent
     public float timeToExtract = 5f;
 
     float timeProgress = 0f;
-    public GameResourcesList resourcesList;
+
 
     [SerializeField]
     FloatingText floatingTextPrefab;

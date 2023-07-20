@@ -34,6 +34,7 @@ public class GameResourcesList : MonoBehaviour
         if (resource == null)
         {
             CreateResource(resourceSO);
+            resource = resources.Find((x) => x.resourceSO == resourceSO);
         }
 
         var resourceView = resourceViews.Find((x) => x.resourceSO == resourceSO);

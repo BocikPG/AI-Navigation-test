@@ -7,6 +7,8 @@ public class BuildingParent : MonoBehaviour
 	[SerializeField]
 	Collider PickUpZone;
 
+	public GameResourcesList resourcesList;
+
 	public Canvas buildingCanvas;
 	public virtual void Update()
 	{

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ExtractionBuilding : BuildingParent
 {
+    public static string Tag = "ExtractionBuilding";
     public float timeToExtract = 5f;
 
     float timeProgress = 0f;
     public GameResourceSO resourceSO;
-    public GameResourcesList resourcesList;
     
     [SerializeField]
     FloatingText floatingTextPrefab;

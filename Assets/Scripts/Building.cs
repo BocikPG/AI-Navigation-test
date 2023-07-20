@@ -5,4 +5,5 @@ using UnityEngine;
 //why all building aren't inherited by one class???
 public class Building : BuildingParent
 {
+	public static string Tag = "Warehouse";
 }
